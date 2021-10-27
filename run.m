@@ -24,3 +24,7 @@ k = 80000; % Bits transmitted per packet
 
 % Clustering Paramters
 p=0.05; % Percentage of cluster heads
+
+%% Initialization of the WSN
+[initial_SN, rn_ids] = createWSN(n, rn, dims, ener('init'), 'equi');
+
