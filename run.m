@@ -17,7 +17,7 @@ ener_agg = false; % Aggregation Energy
 
 % Simulation Parameters
 n = 104; % Number of nodes
-rn = 4; % Number of routing nodes
+sn = 2; % Number of mobile sink
 rounds = 100; % Number of rounds per simulation
 sim = 3; % Number of simulations
 k = 80000; % Bits transmitted per packet
@@ -26,5 +26,5 @@ k = 80000; % Bits transmitted per packet
 p=0.05; % Percentage of cluster heads
 
 %% Initialization of the WSN
-[initial_SN, rn_ids] = createWSN(n, rn, dims, ener('init'), 'equi');
+initial_SN = createWSN(n, sn, dims, ener('init'));
 
