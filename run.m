@@ -27,4 +27,3 @@ p=0.05; % Percentage of cluster heads
 
 %% Initialization of the WSN
 initial_SN = createWSN(n, sn, dims, ener('init'));
-

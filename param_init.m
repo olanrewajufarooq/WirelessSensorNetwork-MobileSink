@@ -45,12 +45,9 @@ y_max = max_dim;
 x_min = 0;
 y_min = 0;
 
-% Calcultion of Base Station Position
-bs_x = x_max/2;
-bs_y = y_max/2;
 
 % Accumulation of dimensions
-dims = containers.Map({'x_min', 'y_min', 'x_max', 'y_max', 'bs_x', 'bs_y', 'rn_dist'}, {x_min, y_min, x_max, y_max, bs_x, bs_y, 0});
+dims = containers.Map({'x_min', 'y_min', 'x_max', 'y_max'}, {x_min, y_min, x_max, y_max});
 
 %% Energy Initialization
 

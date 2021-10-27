@@ -9,7 +9,8 @@ function SN = createWSN(nodes, sink_nodes, dims, energy, seed)
 %   nodes - the total number of sensor and routing nodes
 %   sink_nodes - the number of mobile sinks
 %   dims - the dimensions of the WSN
-%   energy - initial energy of the nodes
+%   energy - initial energy of the nodes (excluding the sinks - whose
+%               energy are infinite).
 %   seed - the random generation seed. Default: true. But you can pass a
 %               new seed by assigning a numeric valid to the seed
 %               parameter. If you don't want seeding, assign 'false'.
