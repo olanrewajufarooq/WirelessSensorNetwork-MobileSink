@@ -57,7 +57,7 @@ for i=1:nodes-sink_nodes
     SN.n(i).rop = 0;	% number of rounds node was operational
     %SN.n(i).rleft = 0;  % rounds left for node to become available for Cluster Head election
     %SN.n(i).dnc = 0;	% nodes distance from the cluster head of the cluster in which he belongs
-    SN.n(i).dnb = sqrt( (dims('bs_x')-SN.n(i).x)^2 + (dims('bs_y')-SN.n(i).y)^2 );    % nodes distance from the base station
+    %SN.n(i).dnb = sqrt( (dims('bs_x')-SN.n(i).x)^2 + (dims('bs_y')-SN.n(i).y)^2 );    % nodes distance from the base station
     %SN.n(i).chelect = 0;	% states how many times the node was elected as a Cluster Head
     %SN.n(i).rnd_chelect = 0;     % round node got elected as cluster head
     %SN.n(i).chid = 0;   % node ID of the cluster head which the "i" normal node belongs to
@@ -72,12 +72,14 @@ for i=1:sink_nodes
         rng(i_seed);
         i_seed = i_seed + 1;
     end
+    
+    j = nodes-sink_nodes+i;
 
-    SN.n(i).id = nodes-sink_nodes+i;	% sensor's ID number
-    SN.n(i).x = rand(1,1)*dims('x_max');	% X-axis coordinates of sensor node
-    SN.n(i).y = rand(1,1)*dims('y_max');	% Y-axis coordinates of sensor node
-    SN.n(i).E = inf;     % nodes energy levels (initially set to be equal to "ener('init')"
-    SN.n(i).role = 'S';   % node acts as normal if the value is 'N', if elected as a priority node it  gets the value 'P' (initially all nodes are normal). Nodes can also be designed as sink => 'S'
+    SN.n(j).id = j;	% sensor's ID number
+    SN.n(j).x = 0.5*dims('x_max');	% X-axis coordinates of sensor node
+    SN.n(j).y = 0.5*dims('y_max');	% Y-axis coordinates of sensor node
+    SN.n(j).E = inf;     % nodes energy levels (initially set to be equal to "ener('init')"
+    SN.n(j).role = 'S';   % node acts as normal if the value is 'N', if elected as a priority node it  gets the value 'P' (initially all nodes are normal). Nodes can also be designed as sink => 'S'
  
 end
 
