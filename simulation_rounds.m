@@ -69,10 +69,12 @@ for round=1:rounds
     end
     
     %Increasing the seed by the number of Sensor Nodes
-    seed =  seed + length(SN.n);
+    %seed =  seed + length(SN.n);
+    
+    % Reset Sensor Node Roles (to Normal and Sink)
     
      % Appoint priority nodes
-    [SN, PN, PN_Cluster] = priority_nodes_election(SN, p, round, dims, ms_path, seed);
+    [SN, sel_ms_path] = priority_nodes_selection(SN, ms_path);
     
     % Perform packet transfer
     if optimize == true
@@ -80,7 +82,7 @@ for round=1:rounds
     else
         method = 'force CH';
     end
-    [SN, round_params] = energy_dissipation(SN, PN_Cluster, round, dims, ener, round_params, method);
+    [SN, round_params] = energy_dissipation(SN, sel_ms_path, ener, round_params, method);
     
     % Update the simulation parameters
     [round_params, stability_period_check, lifetime_check] = round_params_update(SN, PN_Cluster, round_params, rn_ids, round, rounds, stability_period_check, lifetime_check);
