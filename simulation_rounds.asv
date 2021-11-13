@@ -1,4 +1,4 @@
-function [SN] = simulation_rounds(rounds, SN, radius, n_clusters)
+function [SN] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters)
 %SIMULATION_ROUNDS Simulation Function for the Wireless Sensor Network
 %   This function executes the complete simulation of n rounds in a
 %   wireless netowrk and also collating data needed for analytics and
@@ -53,7 +53,7 @@ lifetime_check = true;
 seed = 0;
 
 % Determine the path of the mobile sink
-ms_path = sink_path_determination("predicted", SN, radius);
+ms_path = sink_path_determination("predicted", SN, ms_ids, radius);
 
 % Group the WSN into clusters based on priority nodes
 SN = cluster_grouping(SN, n_clusters);
@@ -72,20 +72,16 @@ for round=1:rounds
     %seed =  seed + length(SN.n);
     
     % Reset Sensor Node Roles (to Normal and Sink)
+    [SN] = resetWSN(SN);
     
      % Appoint priority nodes
-    [SN, sel_ms_path] = priority_nodes_selection(SN, ms_path);
+    [SN, sel_ms_path, pn_ids] = priority_nodes_selection(SN, ms_path);
     
     % Perform packet transfer
-    if optimize == true
-        method = 'shortest';
-    else
-        method = 'force CH';
-    end
-    [SN, round_params] = energy_dissipation(SN, sel_ms_path, ener, round_params, method);
+    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, pn_ids, ener, k, round_params);
     
     % Update the simulation parameters
-    [round_params, stability_period_check, lifetime_check] = round_params_update(SN, PN_Cluster, round_params, rn_ids, round, rounds, stability_period_check, lifetime_check);
+    [round_params, stability_period_check, lifetime_check] = round_params_update(SN, round_params, pn_ids, ms_ids, round, rounds, stability_period_check, lifetime_check);
     [sim_params] = sim_params_update(round, round_params, sim_params);
 end
 

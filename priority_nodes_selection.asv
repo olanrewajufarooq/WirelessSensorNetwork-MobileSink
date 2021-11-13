@@ -47,23 +47,8 @@ end
 
 for cluster = unique([SN.n.cluster])
    
-    if isinteger(cluster)
-       pn_id = pn_ids(cluster);
-
-        for i=1:length(SN.n)
-            if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && isinteger(cluster)
-                SN.n(i).dnp = sqrt( (SN.n(i).x - SN.n(pn_id).x)^2 + (SN.n(i).y - SN.n(pn_id).y)^2 );
-                SN.n(i).pn_id = pn_id;
-            end
-        end
-
-        ms_path_id = sel_ms_path(cluster);
-        SN.n(pn_id).dpnms = sqrt( (SN.n(pn_id).x - ms_path.x(1, ms_path_id))^2 + (SN.n(pn_id).y - ms_path.y(1, ms_path_id))^2 );
-        SN.n(pn_id).ms_id = ms_path.id(1, ms_path_id);
-
-        SN.n(pn_id).dnp = 0;
-        SN.n(pn_id).pn_id = pn_id; 
-    end
+    
+    
     
 end
 

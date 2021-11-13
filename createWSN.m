@@ -1,4 +1,4 @@
-function SN = createWSN(nodes, sink_nodes, dims, energy, seed)
+function [SN, ms_ids] = createWSN(nodes, sink_nodes, dims, energy, seed)
 %CREATEWSN Creation of the Wireless Sensor Network
 %   This function gives the initialization of the sensor nodes, the routing
 %   nodes and the base station of the wireless sensor network (WSN). It
@@ -55,16 +55,12 @@ for i=1:nodes-sink_nodes
     SN.n(i).cluster = 0;	% the cluster which a node belongs to
     SN.n(i).cond = 'A';	% States the current condition of the node. when the node is operational (i.e. alive) its value = 'A' and when dead, value = 'D'
     SN.n(i).rop = 0;	% number of rounds node was operational
-    %SN.n(i).rleft = 0;  % rounds left for node to become available for Cluster Head election
-    %SN.n(i).dnc = 0;	% nodes distance from the cluster head of the cluster in which he belongs
-    %SN.n(i).dnb = sqrt( (dims('bs_x')-SN.n(i).x)^2 + (dims('bs_y')-SN.n(i).y)^2 );    % nodes distance from the base station
-    %SN.n(i).chelect = 0;	% states how many times the node was elected as a Cluster Head
-    %SN.n(i).rnd_chelect = 0;     % round node got elected as cluster head
-    %SN.n(i).chid = 0;   % node ID of the cluster head which the "i" normal node belongs to
-    
+       
 end
 
 %% Building the mobile sinks
+
+ms_ids = zeros(1, sink_nodes); % Initializing array of mobile sink IDs
 
 for i=1:sink_nodes
         
@@ -80,6 +76,11 @@ for i=1:sink_nodes
     SN.n(j).y = 0.5*dims('y_max');	% Y-axis coordinates of sensor node
     SN.n(j).E = inf;     % nodes energy levels (initially set to be equal to "ener('init')"
     SN.n(j).role = 'S';   % node acts as normal if the value is 'N', if elected as a priority node it  gets the value 'P' (initially all nodes are normal). Nodes can also be designed as sink => 'S'
+    SN.n(j).cluster = NaN;	% the cluster which a node belongs to
+    SN.n(j).cond = 'A';	% States the current condition of the node. when the node is operational (i.e. alive) its value = 'A' and when dead, value = 'D'
+    SN.n(j).rop = 0;	% number of rounds node was operational
+    
+    ms_ids(1, i) = j;
  
 end
 
