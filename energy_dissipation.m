@@ -37,9 +37,9 @@ function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path
 %                   'stability period round', 'lifetime round'.
 
 
-for path = 1:length(ms_path)
-    if ismember(path, sel_ms_path)
-        pn_id = pn_ids(sel_ms_path==path);
+for path = 1:length(ms_path.p)
+    if ismember(ms_path.p(path).id, sel_ms_path)
+        pn_id = pn_ids(sel_ms_path==ms_path.p(path).id);
         
         for i = 1:length(SN.n)
             

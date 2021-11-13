@@ -19,7 +19,7 @@ ener_agg = false; % Aggregation Energy
 n = 104; % Number of nodes
 sn = 1; % Number of mobile sink
 ms_radius = 30;
-rounds = 100; % Number of rounds per simulation
+rounds = 500; % Number of rounds per simulation
 sim = 3; % Number of simulations
 k = 80000; % Bits transmitted per packet
 
