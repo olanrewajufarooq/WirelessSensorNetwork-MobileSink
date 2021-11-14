@@ -75,10 +75,10 @@ for round=1:rounds
     [SN] = resetWSN(SN);
     
      % Appoint priority nodes
-    [SN, sel_ms_path, pn_ids] = priority_nodes_selection(SN, ms_path);
+    [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path);
     
     % Perform packet transfer
-    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, pn_ids, ener, k, round_params);
+    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, ener, k, round_params);
     
     % Update the simulation parameters
     [round_params, stability_period_check, lifetime_check] = round_params_update(SN, round_params, pn_ids, ms_ids, round, rounds, stability_period_check, lifetime_check);

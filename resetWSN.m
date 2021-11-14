@@ -22,13 +22,15 @@ function SN = resetWSN(SN)
 %% Building the sensor nodes of the WSN
 
 for i=1:length(SN.n)
+    if strcmp(SN.n(i).role, 'N') || strcmp(SN.n(i).role, 'P')
         
-    SN.n(i).role = 'N';
-    SN.n(i).dnp = 0;
-    SN.n(i).pn_id = 0;
-    SN.n(i).dpnms = 0;
-    SN.n(i).ms_id = 0;
-
+        SN.n(i).role = 'N';
+        SN.n(i).dnp = 0;
+        SN.n(i).pn_id = 0;
+        SN.n(i).dpnms = 0;
+        SN.n(i).ms_id = 0;
+        
+    end
 end
 
 

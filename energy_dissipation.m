@@ -1,4 +1,4 @@
-function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, pn_ids, energy, k, round_params)
+function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, energy, k, round_params)
 %SN, round, dims, energy, k, round_params, method
 %ENERGY_DISSIPATION Energy dissipation function for the WSN
 %   This function evaluates the energy dissipated in the sensor nodes
@@ -37,14 +37,23 @@ function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path
 %                   'stability period round', 'lifetime round'.
 
 
-for path = 1:length(ms_path.p)
-    if ismember(ms_path.p(path).id, sel_ms_path)
-        pn_id = pn_ids(sel_ms_path==ms_path.p(path).id);
+for path = 1:length(ms_path.p(length(SN.n)).x)
+    
+    path_in_selected_paths = false;
+    for ms_id = ms_ids
+        if ismember(path, sel_ms_path) && path_ms(sel_ms_path==path) == ms_id
+            path_in_selected_paths = true;
+        end
+    end
+    
+    
+    if path_in_selected_paths
+        pn_id = pn_ids(sel_ms_path==path);
         
         for i = 1:length(SN.n)
             
             % Packet Transfer for Nodes in Given Cluster
-            if (SN.n(i).pn_id == pn_id) && strcmp(SN.n(i).cond,'A') && strcmp(SN.n(i).role, 'N')
+            if strcmp(SN.n(i).role, 'N') && strcmp(SN.n(i).cond,'A') && (SN.n(i).pn_id == pn_id)
                 
                 if SN.n(i).E > 0 % Verification that node is alive
                     ETx = energy('tran')*k + energy('amp') * k * SN.n(i).dnp^2;

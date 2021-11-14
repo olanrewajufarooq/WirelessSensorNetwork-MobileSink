@@ -1,4 +1,4 @@
-function [SN, sel_ms_path, pn_ids] = priority_nodes_selection(SN, ms_path)
+function [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path)
 %PRIORITY_NODES_SELECTION Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,62 +10,75 @@ for cluster = unique([SN.n.cluster])
     SN_nodes = []; % Node ID
     SN_short_dms = []; % A nodes shortest distance to a predicted path
     ass_path = []; % Associated MS path of the node's shortest distance
+    ass_ms = []; % Associated MS of the node's shortest distance
     
     for i=1:length(SN.n)
-        if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && isinteger(cluster)
+        if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && (~isnan(cluster))
             SN_nodes(end+1) = SN.n(i).id;
             
             % Node Location
             SNx = SN.n(i).x;
             SNy = SN.n(i).y;
             
-            dms = zeros(1, length(ms_path.x));
+            ms_mins = zeros(1, length(ms_ids)); % Minimum DMS for each mobile nodes
+            ms_mins_paths = zeros(1, length(ms_ids)); % Path with the minimum DMS for the given MS
             
-            for path = 1:length(ms_path.x)
-                pathx = ms_path.x(1, path);
-                pathy = ms_path.y(1, path);
+            c = 0; % Counter initiation
+            for ms_id = ms_ids
+                c = c + 1; % Counter update
                 
-               dms(path) = sqrt( (pathx - SNx)^2 + (pathy - SNy)^2 ); 
+                dms = zeros(1, length(ms_path.p(ms_id).x));
+
+                for path = 1:length(ms_path.p(ms_id).x)
+                    pathx = ms_path.p(ms_id).x(path);
+                    pathy = ms_path.p(ms_id).y(path);
+
+                   dms(path) = sqrt( (pathx - SNx)^2 + (pathy - SNy)^2 ); 
+                end
+
+                [M,I]=min(dms(:)); % finds the minimum distance of node to MS
+                
+                ms_mins(1, c) = M;
+                ms_mins_paths(1, c) = I;
             end
             
-            [M,I]=min(dms(:)); % finds the minimum distance of node to MS
+            [M,min_id]=min(ms_mins(:)); % finds the minimum distance of node to MS
+            I = ms_mins_paths(min_id); % Corresponding ID
             
-            SN_short_dms(end+1) = M;
-            ass_path(end+1) = I; 
+            SN_short_dms(end+1) = M; % The shortest dist between node and any MS
+            ass_ms(end+1) = ms_ids(min_id); % The closest MS to the node
+            ass_path(end+1) = I; % The id of the closest path
         end 
     end
     
-    [~,J]=min(SN_short_dms(:)); % finds the minimum distance of node to RN
+    [min_dist,J]=min(SN_short_dms(:)); % finds the minimum distance of node to MS
     
-    if isinteger(J)
-        SN.n(SN_nodes(J)).role = 'P';
+    % To detect is J returns sn empty array
+    j_shape = size(J);
+    
+    if j_shape(1) > 0
+        pn_id = SN_nodes(J);
+        SN.n(pn_id).role = 'P';
+        SN.n(pn_id).ms_id = ass_ms(J);
+        SN.n(pn_id).ms_path_id = ass_path(J);
+        SN.n(pn_id).dpnms = min_dist;
         sel_ms_path(cluster) = ass_path(J);
-        pn_ids(cluster) = SN_nodes(J);
-    end
-    
-end
-
-for cluster = unique([SN.n.cluster])
-   
-    if isinteger(cluster)
-       pn_id = pn_ids(cluster);
-
+        path_ms(cluster) = ass_ms(J);
+        pn_ids(cluster) = pn_id;
+        
         for i=1:length(SN.n)
             if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && isinteger(cluster)
                 SN.n(i).dnp = sqrt( (SN.n(i).x - SN.n(pn_id).x)^2 + (SN.n(i).y - SN.n(pn_id).y)^2 );
                 SN.n(i).pn_id = pn_id;
             end
         end
-
-        ms_path_id = sel_ms_path(cluster);
-        SN.n(pn_id).dpnms = sqrt( (SN.n(pn_id).x - ms_path.x(1, ms_path_id))^2 + (SN.n(pn_id).y - ms_path.y(1, ms_path_id))^2 );
-        SN.n(pn_id).ms_id = ms_path.id(1, ms_path_id);
-
+        
         SN.n(pn_id).dnp = 0;
-        SN.n(pn_id).pn_id = pn_id; 
+        SN.n(pn_id).pn_id = pn_id;
     end
     
 end
+
 
 end
 
