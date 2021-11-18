@@ -19,9 +19,9 @@ ener_agg = false; % Aggregation Energy
 n = 104; % Number of nodes
 sn = 1; % Number of mobile sink
 ms_radius = 30;
-rounds = 5000; % Number of rounds per simulation
+rounds = 150; % Number of rounds per simulation
 sim = 3; % Number of simulations
-k = 8000; % Bits transmitted per packet
+k = 80000; % Bits transmitted per packet
 
 % Clustering Paramters
 n_clusters=4; % Percentage of cluster heads
@@ -30,4 +30,12 @@ n_clusters=4; % Percentage of cluster heads
 [initial_SN, ms_ids] = createWSN(n, sn, dims, ener('init'));
 
 %% Smiluation of the WSN
-[SN] = simulation_rounds(rounds, initial_SN, ener, k, ms_ids, ms_radius, n_clusters);
+[SN, round_params, sim_params] = simulation_rounds(rounds, initial_SN, ener, k, ms_ids, ms_radius, n_clusters);
+
+%% Lifetime and Stability Periods.
+
+fprintf('\n\nSimulation Summary\n')
+fprintf('Stability Period: %d\n', round(round_params('stability period'), 2))
+fprintf('Stability Period Round: %d\n', round_params('stability period round'))
+fprintf('Lifetime: %d\n', round(round_params('lifetime'), 2))
+fprintf('Lifetime Round: %d\n', round_params('lifetime round'))

@@ -1,4 +1,4 @@
-function [SN] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters)
+function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters)
 %SIMULATION_ROUNDS Simulation Function for the Wireless Sensor Network
 %   This function executes the complete simulation of n rounds in a
 %   wireless netowrk and also collating data needed for analytics and
@@ -48,9 +48,6 @@ stability_period_check = true;
 lifetime_check = true;
 
 %% Simulation Loop
-
-% Seed Initiation
-seed = 0;
 
 % Determine the path of the mobile sink
 ms_path = sink_path_determination("predicted", SN, ms_ids, radius);

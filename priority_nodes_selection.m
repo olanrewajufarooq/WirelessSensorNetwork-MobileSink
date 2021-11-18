@@ -4,6 +4,7 @@ function [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_id
 
 sel_ms_path = zeros( 1, length(unique([SN.n.cluster])) );
 pn_ids = zeros( 1, length(unique([SN.n.cluster])) );
+path_ms = [];
 
 for cluster = unique([SN.n.cluster])
     
@@ -13,7 +14,7 @@ for cluster = unique([SN.n.cluster])
     ass_ms = []; % Associated MS of the node's shortest distance
     
     for i=1:length(SN.n)
-        if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && (~isnan(cluster))
+        if strcmp(SN.n(i).role, 'N') && strcmp(SN.n(i).cond, 'A') && (SN.n(i).cluster == cluster) && (~isnan(cluster))
             SN_nodes(end+1) = SN.n(i).id;
             
             % Node Location
@@ -33,7 +34,7 @@ for cluster = unique([SN.n.cluster])
                     pathx = ms_path.p(ms_id).x(path);
                     pathy = ms_path.p(ms_id).y(path);
 
-                   dms(path) = sqrt( (pathx - SNx)^2 + (pathy - SNy)^2 ); 
+                   dms(path) = sqrt( (pathx - SNx)^2 + (pathy - SNy)^2 );
                 end
 
                 [M,I]=min(dms(:)); % finds the minimum distance of node to MS
@@ -67,7 +68,7 @@ for cluster = unique([SN.n.cluster])
         pn_ids(cluster) = pn_id;
         
         for i=1:length(SN.n)
-            if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster) && isinteger(cluster)
+            if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster)
                 SN.n(i).dnp = sqrt( (SN.n(i).x - SN.n(pn_id).x)^2 + (SN.n(i).y - SN.n(pn_id).y)^2 );
                 SN.n(i).pn_id = pn_id;
             end
