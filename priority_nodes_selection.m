@@ -1,4 +1,4 @@
-function [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path)
+function [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path, visual)
 %PRIORITY_NODES_SELECTION Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -66,6 +66,16 @@ for cluster = unique([SN.n.cluster])
         sel_ms_path(cluster) = ass_path(J);
         path_ms(cluster) = ass_ms(J);
         pn_ids(cluster) = pn_id;
+        
+        if visual
+            % Plot Update
+            p = scatter(SN.n(pn_id).x, SN.n(pn_id).y);
+            p.MarkerFaceColor = 'blue';
+            p.MarkerEdgeColor = 'blue';
+            p.MarkerFaceAlpha = 0.01 - SN.n(pn_id).E/50;
+            drawnow;
+            hold on
+        end
         
         for i=1:length(SN.n)
             if strcmp(SN.n(i).role, 'N') && (SN.n(i).cluster == cluster)

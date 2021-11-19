@@ -33,11 +33,6 @@ final_visual = true;
 if visual
     figure(1)
     plot( dims('x_min'),dims('y_min'),dims('x_max'),dims('y_max') ); drawnow
-    
-    title ({'Mobile Sink'; 'Wireless Sensor Network';})
-    xlabel '(m)';
-    ylabel '(m)';
-    
     hold on
 end
 
@@ -50,8 +45,7 @@ end
 %% Data Visualisation Conclusion
 
 if ~visual
-    figure(1)
-    plotWSN(initial_SN, dims);
+   plotWSN(initial_SN); 
 end
 
 if final_visual

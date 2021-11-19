@@ -1,4 +1,4 @@
-function [SN, ms_ids] = createWSN(nodes, sink_nodes, dims, energy, seed)
+function [SN, ms_ids] = createWSN(nodes, sink_nodes, dims, energy, visual, seed)
 %CREATEWSN Creation of the Wireless Sensor Network
 %   This function gives the initialization of the sensor nodes, the routing
 %   nodes and the base station of the wireless sensor network (WSN). It
@@ -24,7 +24,7 @@ if sink_nodes >= nodes
     error('The number of mobile sinks must be less than the total number of nodes')
 end
 
-if nargin < 5
+if nargin < 6
     seed = true;
 end
 
@@ -55,7 +55,17 @@ for i=1:nodes-sink_nodes
     SN.n(i).cluster = 0;	% the cluster which a node belongs to
     SN.n(i).cond = 'A';	% States the current condition of the node. when the node is operational (i.e. alive) its value = 'A' and when dead, value = 'D'
     SN.n(i).rop = 0;	% number of rounds node was operational
-       
+    
+    if visual
+        % Plots
+        p = scatter(SN.n(i).x, SN.n(i).y);
+        p.MarkerFaceColor = 'red';
+        p.MarkerEdgeColor = 'red';
+        p.MarkerFaceAlpha = 0.01 - SN.n(i).E/50;
+        drawnow;
+        hold on
+    end
+
 end
 
 %% Building the mobile sinks
@@ -81,6 +91,15 @@ for i=1:sink_nodes
     SN.n(j).rop = 0;	% number of rounds node was operational
     
     ms_ids(1, i) = j;
+    
+    if visual
+        % Plots
+        p = scatter(SN.n(j).x, SN.n(j).y);
+        p.MarkerFaceColor = 'black';
+        p.MarkerEdgeColor = 'black';
+        drawnow;
+        hold on
+    end
  
 end
 

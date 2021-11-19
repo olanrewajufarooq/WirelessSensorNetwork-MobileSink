@@ -22,11 +22,11 @@ for i=1:length(SN.n)
         
         
         if x_rel >= 0 && y_rel >= 0
-           ch_id = atan2(x_rel, y_rel)/clust_angle;
+           ch_id = atan(x_rel/y_rel)/clust_angle;
         elseif x_rel < 0
-           ch_id = ( atan2(x_rel, y_rel) + pi )/clust_angle;
+           ch_id = ( atan(x_rel/y_rel) + pi )/clust_angle;
         elseif x_rel >= 0 && y_rel < 0
-           ch_id = ( atan2(x_rel, y_rel) + 2*pi )/clust_angle;
+           ch_id = ( atan(x_rel/y_rel) + 2*pi )/clust_angle;
         end
         
         SN.n(i).cluster = ceil(ch_id);

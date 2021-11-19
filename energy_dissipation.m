@@ -1,4 +1,4 @@
-function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, energy, k, round_params)
+function [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, energy, k, round_params, visual)
 %SN, round, dims, energy, k, round_params, method
 %ENERGY_DISSIPATION Energy dissipation function for the WSN
 %   This function evaluates the energy dissipated in the sensor nodes
@@ -45,7 +45,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
             path_in_selected_paths = true;
         end
     end
-    
+      
     
     if path_in_selected_paths
         pn_id = pn_ids(sel_ms_path==path);
@@ -59,6 +59,20 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                     ETx = energy('tran')*k + energy('amp') * k * SN.n(i).dnp^2;
                     SN.n(i).E = SN.n(i).E - ETx;
                     round_params('total energy') = round_params('total energy') + ETx;
+                    
+                    if visual
+                        % Plot Update
+                        p = scatter(SN.n(i).x, SN.n(i).y);
+                        p.MarkerFaceColor = 'red';
+                        p.MarkerEdgeColor = 'red';
+                        if SN.n(i).E >= 0
+                            p.MarkerFaceAlpha = 0.01 - SN.n(i).E/50;
+                        else
+                            p.MarkerFaceAlpha = 0.01;
+                        end
+                        drawnow;
+                        hold on
+                    end
 
                     % Dissipation for priority node during reception
                     if SN.n(SN.n(i).pn_id).E > 0 && strcmp(SN.n(SN.n(i).pn_id).cond, 'A') && strcmp(SN.n(SN.n(i).pn_id).role, 'P')
@@ -66,9 +80,24 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                         round_params('total energy') = round_params('total energy') + ERx;
                         SN.n(SN.n(i).pn_id).E = SN.n(SN.n(i).pn_id).E - ERx;
                         
+                        if visual
+                            % Plot Update
+                            p = scatter(SN.n(SN.n(i).pn_id).x, SN.n(SN.n(i).pn_id).y);
+                            p.MarkerFaceColor = 'blue';
+                            p.MarkerEdgeColor = 'blue';
+                            if SN.n(SN.n(i).pn_id).E >= 0
+                                p.MarkerFaceAlpha = 0.01 - SN.n(SN.n(i).pn_id).E/50;
+                            else
+                                p.MarkerFaceAlpha = 0.01;
+                            end
+                            drawnow;
+                            hold on
+                        end
+                        
                         if SN.n(SN.n(i).pn_id).E<=0  % if priority node energy depletes with reception
                             SN.n(SN.n(i).pn_id).cond = 'D';
                             SN.n(SN.n(i).pn_id).rop=round;
+                            SN.n(SN.n(i).pn_id).E=0;
                             round_params('dead nodes') = round_params('dead nodes') + 1;
                             round_params('operating nodes') = round_params('operating nodes') - 1;
                         end
@@ -82,6 +111,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                     SN.n(i).cond = 'D';
                     SN.n(i).pn_id=0;
                     SN.n(i).rop=round;
+                    SN.n(i).E=0;
                 end
                 
             end
@@ -96,6 +126,21 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                 ETx = energy('tran')*k + energy('amp') * k * SN.n(pn_id).dpnms^2;
                 SN.n(pn_id).E = SN.n(pn_id).E - ETx;
                 round_params('total energy') = round_params('total energy') + ETx;
+                round_params('packets') = round_params('packets') + 1;
+                
+                if visual
+                    % Plot Update
+                    p = scatter(SN.n(pn_id).x, SN.n(pn_id).y);
+                    p.MarkerFaceColor = 'blue';
+                    p.MarkerEdgeColor = 'blue';
+                    if SN.n(pn_id).E >= 0
+                        p.MarkerFaceAlpha = 0.01 - SN.n(pn_id).E/50;
+                    else
+                        p.MarkerFaceAlpha = 0.01;
+                    end
+                    drawnow;
+                    hold on
+                end
                 
                 % Check for priority node depletion
                 if SN.n(pn_id).E<=0 % if nodes energy depletes with transmission
@@ -104,6 +149,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                     SN.n(pn_id).cond = 'D';
                     SN.n(pn_id).pn_id=0;
                     SN.n(pn_id).rop=round;
+                    SN.n(pn_id).E=0;
                 end
                 
                 % Energy Dissipation in Mobile Sink
@@ -116,6 +162,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
                 if SN.n(ms_id).E<=0  % if mobile sink energy depletes with reception
                     SN.n(ms_id).cond = 'D';
                     SN.n(ms_id).rop=round;
+                    SN.n(ms_id).E=0;
                     round_params('dead nodes') = round_params('dead nodes') + 1;
                     round_params('operating nodes') = round_params('operating nodes') - 1;
                 end

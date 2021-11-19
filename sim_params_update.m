@@ -22,7 +22,7 @@ function [sim_params] = sim_params_update(round, round_params, sim_params)
 %                   "total energy", "packets", "cluster heads".
 
 
-for i=["dead nodes", "operating nodes", "total energy", "packets", "cluster heads"]
+for i=["dead nodes", "operating nodes", "total energy", "packets"]
     x = sim_params(i);
     x(round) = round_params(i);
     sim_params(i) = x;

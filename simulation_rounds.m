@@ -1,4 +1,4 @@
-function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters)
+function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters, visual)
 %SIMULATION_ROUNDS Simulation Function for the Wireless Sensor Network
 %   This function executes the complete simulation of n rounds in a
 %   wireless netowrk and also collating data needed for analytics and
@@ -41,8 +41,8 @@ end
 
 %% Initializations
 
-round_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'cluster heads', 'stability period', 'lifetime', 'stability period round', 'lifetime round'}, {0, length(SN.n), 0, 0, 0, 0, 0, 0, 0} );
-sim_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'cluster heads'}, {zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds)} );
+round_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'stability period', 'lifetime', 'stability period round', 'lifetime round'}, {0, length(SN.n), 0, 0, 0, 0, 0, 0} );
+sim_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets'}, {zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds)} );
 
 stability_period_check = true;
 lifetime_check = true;
@@ -72,10 +72,10 @@ for round=1:rounds
     [SN] = resetWSN(SN);
     
      % Appoint priority nodes
-    [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path);
+    [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path, visual);
     
     % Perform packet transfer
-    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, ener, k, round_params);
+    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, ener, k, round_params, visual);
     
     % Update the simulation parameters
     [round_params, stability_period_check, lifetime_check] = round_params_update(SN, round_params, pn_ids, ms_ids, round, rounds, stability_period_check, lifetime_check);
