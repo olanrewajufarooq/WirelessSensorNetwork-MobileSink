@@ -21,7 +21,7 @@ sn = 1; % Number of mobile sink
 ms_radius = 30;
 rounds = 6000; % Number of rounds per simulation
 % sim = 3; % Number of simulations
-k = 800; % Bits transmitted per packet
+k = 8000; % Bits transmitted per packet
 
 % Clustering Paramters
 n_clusters = 5; % Percentage of cluster heads
