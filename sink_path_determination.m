@@ -7,7 +7,7 @@ ms_path = struct();
 for ms_id = ms_ids
     
     if strcmp(method, "predicted")
-        angles = 0:1:360;
+        angles = 1:1:360;
 
         % Initialization of point numbers
         i = 0;

@@ -1,4 +1,4 @@
-function plot_data(rounds, sim_param)
+function plot_data(rounds, sim_params)
 %PLOT_DATA Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -9,7 +9,7 @@ for param = ["dead nodes", "operating nodes", "total energy", "packets", "contac
     i = i + 1;
     subplot(2, 3, i)
     
-    plot(1:rounds,sim_param(param),'-r','Linewidth',2);
+    plot(1:rounds,sim_params(param),'-r','Linewidth',2);
     hold on
     
     xlim([0 rounds]);

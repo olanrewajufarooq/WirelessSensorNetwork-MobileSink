@@ -1,4 +1,4 @@
-function SN = cluster_grouping(SN, n_clusters)
+function SN = cluster_grouping(SN, n_clusters, dims)
 %CLUSTER_GROUPING Grouping Nodes into Clusters
 %   This function group nodes in the wireless sensor network (WSN) into the
 %   clusters based on their distance from the elected cluster heads
@@ -16,10 +16,8 @@ clust_angle = 2*pi/n_clusters;
 for i=1:length(SN.n)
     if  (SN.n(i).role == 'N') % if node is normal
         
-        x_rel = SN.n(i).x - SN.n(length(SN.n)).x;
-        y_rel = SN.n(i).y - SN.n(length(SN.n)).y;
-        
-        
+        x_rel = SN.n(i).x - dims('x_max')/2;
+        y_rel = SN.n(i).y - dims('y_max')/2;
         
         if x_rel >= 0 && y_rel >= 0
            ch_id = atan(x_rel/y_rel)/clust_angle;

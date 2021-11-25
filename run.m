@@ -24,7 +24,7 @@ rounds = 6000; % Number of rounds per simulation
 k = 8000; % Bits transmitted per packet
 
 % Clustering Paramters
-n_clusters = 5; % Percentage of cluster heads
+n_clusters = 5;
 
 %% Data Visualization Initialization
 visual = false; % For dynamic visualization

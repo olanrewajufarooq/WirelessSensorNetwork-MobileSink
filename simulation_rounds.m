@@ -29,16 +29,6 @@ function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, ener, k,
 %                   'packets', 'stability period', 'lifetime', 
 %                   'stability period round', 'lifetime round'.
 
-%% Default Values
-
-if nargin < 8
-    multiple_sim = false;
-    optimize = false;
-elseif nargin < 9
-    multiple_sim = false;
-end
-
-
 %% Initializations
 
 round_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'stability period', 'lifetime', 'stability period round', 'lifetime round', 'contact time', 'interconnect time'}, {0, length(SN.n), 0, 0, 0, 0, 0, 0, 0, 0} );
@@ -53,7 +43,7 @@ lifetime_check = true;
 ms_path = sink_path_determination("predicted", SN, ms_ids, radius);
 
 % Group the WSN into clusters based on priority nodes
-SN = cluster_grouping(SN, n_clusters);
+SN = cluster_grouping(SN, n_clusters, dims);
 
 if visual
     plot_ms_path(ms_path, ms_ids)
