@@ -6,8 +6,8 @@ for ms_id = ms_ids
     for path = 1:length(ms_path.p(ms_id).x)
         % Plot Path Points Update
         p = scatter(ms_path.p(ms_id).x(path), ms_path.p(ms_id).y(path), 0.5);
-        p.MarkerFaceColor = 'orange';
-        p.MarkerEdgeColor = 'orange';
+        p.MarkerFaceColor = 'magenta'; 
+        p.MarkerEdgeColor = 'magenta';
 
         drawnow;
         hold on;
