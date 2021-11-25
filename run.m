@@ -27,7 +27,7 @@ k = 8000; % Bits transmitted per packet
 n_clusters = 5;
 
 %% Data Visualization Initialization
-visual = false; % For dynamic visualization
+visual = true; % For dynamic visualization
 final_visual = true;
 
 if visual
@@ -45,7 +45,7 @@ end
 [initial_SN, ms_ids] = createWSN(n, sn, dims, ener('init'), visual);
 
 %% Smiluation of the WSN
-[SN, round_params, sim_params] = simulation_rounds(rounds, initial_SN, ener, k, ms_ids, ms_radius, n_clusters, visual);
+[SN, round_params, sim_params] = simulation_rounds(rounds, initial_SN, dims, ener, k, ms_ids, ms_radius, n_clusters, visual);
 
 %% Data Visualisation Conclusion
 

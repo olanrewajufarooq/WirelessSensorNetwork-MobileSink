@@ -1,4 +1,4 @@
-function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, ener, k, ms_ids, radius, n_clusters, visual)
+function [SN, round_params, sim_params] = simulation_rounds(rounds, SN, dims, ener, k, ms_ids, radius, n_clusters, visual)
 %SIMULATION_ROUNDS Simulation Function for the Wireless Sensor Network
 %   This function executes the complete simulation of n rounds in a
 %   wireless netowrk and also collating data needed for analytics and
@@ -59,14 +59,7 @@ int_conn_start_check = false;
 for round=1:rounds
     
     % Display the current round
-    if multiple_sim == true
-        fprintf('Simulation = %d : Round = %d \n', sim_number, round);
-    else
-        fprintf('Round = %d \n', round);
-    end
-    
-    %Increasing the seed by the number of Sensor Nodes
-    %seed =  seed + length(SN.n);
+    fprintf('Round = %d \n', round);
     
     % Reset Sensor Node Roles (to Normal and Sink)
     [SN] = resetWSN(SN);

@@ -108,7 +108,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
 
                     % Dissipation for priority node during reception
                     if SN.n(SN.n(i).pn_id).E > 0 && strcmp(SN.n(SN.n(i).pn_id).cond, 'A') && strcmp(SN.n(SN.n(i).pn_id).role, 'P')
-                        ERx=(energy('rec') + energy('agg'))*k;
+                        ERx = (energy('rec') + energy('agg'))*k;
                         round_params('total energy') = round_params('total energy') + ERx;
                         SN.n(SN.n(i).pn_id).E = SN.n(SN.n(i).pn_id).E - ERx;
                         
@@ -159,7 +159,7 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
         
         % Packet Transmission to the Mobile Sink
         
-        if strcmp(SN.n(pn_id).role, 'P') &&  strcmp(SN.n(pn_id).cond,'A')
+        if strcmp(SN.n(pn_id).role, 'P') &&  strcmp(SN.n(pn_id).cond, 'A')
             
             if SN.n(pn_id).E > 0
             

@@ -63,6 +63,7 @@ for cluster = unique([SN.n.cluster])
         SN.n(pn_id).ms_id = ass_ms(J);
         SN.n(pn_id).ms_path_id = ass_path(J);
         SN.n(pn_id).dpnms = min_dist;
+        
         sel_ms_path(cluster) = ass_path(J);
         path_ms(cluster) = ass_ms(J);
         pn_ids(cluster) = pn_id;
