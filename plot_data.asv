@@ -5,9 +5,9 @@ function plot_data(rounds, sim_param)
 figure(2)
 
 i = 0;
-for param = ["dead nodes", "operating nodes", "total energy", "packets", "contact time", "interconnect time"]
+for param = ["dead nodes", "operating nodes", "total energy", "packets", "contact time"]
     i = i + 1;
-    subplot(2, 3, i)
+    subplot(2, 2, i)
     
     plot(1:rounds,sim_param(param),'-r','Linewidth',2);
     hold on

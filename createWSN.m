@@ -48,8 +48,8 @@ for i=1:nodes-sink_nodes
     end
 
     SN.n(i).id = i;	% sensor's ID number
-    SN.n(i).x = rand(1,1)*dims('x_max');	% X-axis coordinates of sensor node
-    SN.n(i).y = rand(1,1)*dims('y_max');	% Y-axis coordinates of sensor node
+    SN.n(i).x = dims('x_min') + rand(1,1)*dims('x_max');	% X-axis coordinates of sensor node
+    SN.n(i).y = dims('y_min') + rand(1,1)*dims('y_max');	% Y-axis coordinates of sensor node
     SN.n(i).E = energy;     % nodes energy levels (initially set to be equal to "ener('init')"
     SN.n(i).role = 'N';   % node acts as normal if the value is 'N', if elected as a priority node it  gets the value 'P' (initially all nodes are normal). Nodes can also be designed as sink => 'S'
     SN.n(i).cluster = 0;	% the cluster which a node belongs to

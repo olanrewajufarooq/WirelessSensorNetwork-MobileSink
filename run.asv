@@ -16,18 +16,18 @@ ener_agg = false; % Aggregation Energy
 [dims, ener] = param_init(max_dimension, initial_energy, transceiver_energy, ener_agg, ener_amp);
 
 % Simulation Parameters
-n = 100; % Number of nodes
+n = 200; % Number of nodes
 sn = 1; % Number of mobile sink
 ms_radius = 30;
-rounds = 6000; % Number of rounds per simulation
+rounds = 20; % Number of rounds per simulation
 % sim = 3; % Number of simulations
 k = 800; % Bits transmitted per packet
 
 % Clustering Paramters
-n_clusters = 5; % Percentage of cluster heads
+n_clusters = 4; % Percentage of cluster heads
 
 %% Data Visualization Initialization
-visual = false; % For dynamic visualization
+visual = true; % For dynamic visualization
 final_visual = true;
 
 if visual

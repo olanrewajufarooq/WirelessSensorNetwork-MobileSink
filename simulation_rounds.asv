@@ -42,7 +42,7 @@ end
 %% Initializations
 
 round_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'stability period', 'lifetime', 'stability period round', 'lifetime round', 'contact time', 'interconnect time'}, {0, length(SN.n), 0, 0, 0, 0, 0, 0, 0, 0} );
-sim_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'contact time', 'interconnect time'}, {zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds)} );
+sim_params = containers.Map( {'dead nodes', 'operating nodes', 'total energy', 'packets', 'contact time', 'interconnect_time'}, {zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds), zeros(1,rounds)} );
 
 stability_period_check = true;
 lifetime_check = true;
@@ -60,12 +60,8 @@ if visual
 end
 
 
+
 tic %Initialize timing
-
-% Interconnected timer initializer
-int_conn_start = toc;
-int_conn_start_check = false;
-
 for round=1:rounds
     
     % Display the current round
@@ -85,7 +81,7 @@ for round=1:rounds
     [SN, sel_ms_path, path_ms, pn_ids] = priority_nodes_selection(SN, ms_ids, ms_path, visual);
     
     % Perform packet transfer
-    [SN, round_params, int_conn_start, int_conn_start_check] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, ener, k, round_params, int_conn_start, int_conn_start_check, visual);
+    [SN, round_params] = energy_dissipation(SN, round, ms_path, sel_ms_path, path_ms, ms_ids, pn_ids, ener, k, round_params, visual);
     
     % Update the simulation parameters
     [round_params, stability_period_check, lifetime_check] = round_params_update(SN, round_params, pn_ids, ms_ids, round, rounds, stability_period_check, lifetime_check);

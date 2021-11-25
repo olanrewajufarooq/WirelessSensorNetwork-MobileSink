@@ -217,9 +217,6 @@ for path = 1:length(ms_path.p(length(SN.n)).x)
 
         round_params('contact time') = round_params('contact time') + contact_time;
         
-        int_conn_start = toc;
-        int_conn_start_check = true;
-        
     end
 end
 
