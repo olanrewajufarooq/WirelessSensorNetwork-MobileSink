@@ -31,7 +31,7 @@ function [round_params, stability_period_check, lifetime_check] = round_params_u
 %                       period metric.
 
 if stability_period_check
-    if round_params('operating nodes') < length(SN.n) - length(pn_ids) - length(ms_ids)
+    if round_params('operating nodes') < length(SN.n) - length(ms_ids)
         round_params('stability period') = toc;
         round_params('stability period round') = round;
         stability_period_check = false;
