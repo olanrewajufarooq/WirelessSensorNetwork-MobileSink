@@ -9,8 +9,8 @@ max_dimension = 100; % Maximum Dimension of the WSN Plot
 
 initial_energy = 500e-3; % Initial node energy
 transceiver_energy = 50e-9; % Energy Required for transmission and receiving of packet
-ener_amp = false; % Amplification Energy
-ener_agg = false; % Aggregation Energy
+ener_amp = 100e-12; % Amplification Energy
+ener_agg = 100e-12; % Aggregation Energy
 
 % Parameter Initialization
 [dims, ener] = param_init(max_dimension, initial_energy, transceiver_energy, ener_agg, ener_amp);
@@ -19,12 +19,12 @@ ener_agg = false; % Aggregation Energy
 n = 100; % Number of nodes
 sn = 1; % Number of mobile sink
 ms_radius = 30;
-rounds = 100; % Number of rounds per simulation
+rounds = 1000; % Number of rounds per simulation
 % sim = 3; % Number of simulations
-k = 80000; % Bits transmitted per packet
+k = 8000; % Bits transmitted per packet
 
 % Clustering Paramters
-n_clusters = 5;
+n_clusters = 4;
 
 %% Data Visualization Initialization
 visual = false; % For dynamic visualization
